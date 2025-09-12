@@ -80,7 +80,6 @@ $bc_douglas_fir_theme_option_defaults = array(
 	'blog_homepage_toggle'   => true,
 	'blog_number_posts'      => '5',
 	'facebook'               => '',
-	'twitter'                => '',
 	'linkedin'               => '',
 	'youtube'                => '',
 	'instagram'              => '',
@@ -759,14 +758,6 @@ function bc_douglas_fir_register_theme_customizer( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_setting(
-		'theme_mayflower_options[twitter]',
-		array(
-			'type'              => 'option',
-			'default'           => $bc_douglas_fir_theme_option_defaults['twitter'],
-			'sanitize_callback' => 'sanitize_ext_url',
-		)
-	);
-	$wp_customize->add_setting(
 		'theme_mayflower_options[linkedin]',
 		array(
 			'type'              => 'option',
@@ -798,18 +789,6 @@ function bc_douglas_fir_register_theme_customizer( $wp_customize ) {
 				'label'    => __( 'Facebook', 'bc-douglas-fir' ),
 				'section'  => 'bc_douglas_fir_social',
 				'settings' => 'theme_mayflower_options[facebook]',
-				'type'     => 'text',
-			)
-		)
-	);
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'twitter',
-			array(
-				'label'    => __( 'X (Previously Twitter)', 'bc-douglas-fir' ),
-				'section'  => 'bc_douglas_fir_social',
-				'settings' => 'theme_mayflower_options[twitter]',
 				'type'     => 'text',
 			)
 		)

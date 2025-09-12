@@ -61,7 +61,7 @@ global $post, $bc_douglas_fir_options, $bc_douglas_fir_brand_css, $mayflower_the
 												">
 			<div class="social-media
 			<?php
-			if ( empty( $bc_douglas_fir_options['facebook'] ) && empty( $bc_douglas_fir_options['twitter'] ) && empty( $bc_douglas_fir_options['youtube'] ) && empty( $bc_douglas_fir_options['instagram'] ) && empty( $bc_douglas_fir_options['linkedin'] ) ) {
+			if ( empty( $bc_douglas_fir_options['facebook'] ) && empty( $bc_douglas_fir_options['youtube'] ) && empty( $bc_douglas_fir_options['instagram'] ) && empty( $bc_douglas_fir_options['linkedin'] ) ) {
 				echo 'social-media-no-margin';
 			}
 			?>
@@ -70,13 +70,6 @@ global $post, $bc_douglas_fir_options, $bc_douglas_fir_brand_css, $mayflower_the
 					<a class="px-2 py-1" href="<?php echo esc_url( $bc_douglas_fir_options['facebook'] ); ?>" title="Facebook">
 						<i class="fab fa-facebook-square" aria-hidden="true"></i>
 						<span class="sr-only">Facebook</span></a>
-					</a>
-				<?php } ?>
-
-				<?php if ( ! empty( $bc_douglas_fir_options['twitter'] ) ) { ?>
-					<a class="px-2 py-1" href="<?php echo esc_url( $bc_douglas_fir_options['twitter'] ); ?>" title="X">
-						<i class="fab fa-square-x-twitter" aria-hidden="true"></i>
-						<span class="sr-only">Twitter</span>
 					</a>
 				<?php } ?>
 
