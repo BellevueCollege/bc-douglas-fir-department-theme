@@ -14,17 +14,16 @@ if ( have_posts() ) :
 				the_post_thumbnail(
 					'medium',
 					array(
-						'class' => 'media-object img-fluid img-thumbnail',
+						'class' => 'media-object img-fluid img-thumbnail mr-md-3 mb-4',
 						'alt'   => the_title_attribute(
 							array(
-								'after' => ' Picture',
 								'echo'  => false,
 							)
 						),
 					)
 				);
 			} else {
-				echo '<img class="media-object img-fluid img-thumbnail" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
+				echo '<img class="media-object img-fluid img-thumbnail mr-md-3 mb-4" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
 			}
 		?>
 
