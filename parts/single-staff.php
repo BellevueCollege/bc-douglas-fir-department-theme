@@ -9,26 +9,23 @@ if ( have_posts() ) :
 	while ( have_posts() ) :
 		the_post(); ?>
 	<div class="media flex-column flex-md-row">
-			<a class="align-self-start mr-3 mb-4" href="<?php the_permalink(); ?>">
 			<?php
 			if ( has_post_thumbnail() ) {
 				the_post_thumbnail(
 					'medium',
 					array(
-						'class' => 'media-object img-fluid img-thumbnail',
+						'class' => 'media-object img-fluid img-thumbnail mr-md-3 mb-4',
 						'alt'   => the_title_attribute(
 							array(
-								'after' => ' Picture',
 								'echo'  => false,
 							)
 						),
 					)
 				);
 			} else {
-				echo '<img class="media-object img-fluid img-thumbnail" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
+				echo '<img class="media-object img-fluid img-thumbnail mr-md-3 mb-4" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
 			}
-			?>
-			</a>
+		?>
 
 			<div class="media-body">
 				<?php $post_meta_data = get_post_custom( $post->ID ); ?>

@@ -5,7 +5,7 @@ Theme URI: https://github.com/BellevueCollege/bc-douglas-fir-department-theme
 Description: The Bellevue College Department Site theme.
 Author: Bellevue College Integration
 Author URI: https://www.bellevuecollege.edu/its/
-Version: 1.2.0-dev1--versionStamp#
+Version: 1.2.0--versionStamp#
 GitHub Theme URI: bellevuecollege/bc-douglas-fir-department-theme
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -577,12 +577,12 @@ ul.header-social-links li {
   padding-bottom: 0.5em;
 }
 .sidebar .wp-widget.widget_nav_menu {
-  box-shadow: 0 2px 2px gainsboro;
+  box-shadow: 0 2px 2px rgb(219.5, 219.5, 219.5);
 }
 .sidebar .widget-title {
   font-size: 1rem;
   line-height: 1.75rem;
-  background-image: linear-gradient(#00559f, #004785);
+  background-image: linear-gradient(rgb(0, 84.6127819549, 158.5), #004785);
   font-family: helvetica, arial, sans-serif;
   color: white;
   margin: 0;
@@ -609,7 +609,7 @@ ul.header-social-links li {
   display: block;
 }
 .sidebar li.menu-item a {
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid rgb(232.25, 232.25, 232.25);
   padding: 0.125em 0 0.125em 1rem;
   width: 100%;
   display: block;
@@ -617,8 +617,8 @@ ul.header-social-links li {
 .sidebar li.menu-item a:hover,
 .sidebar li.menu-item a:focus,
 .sidebar li.menu-item a:active {
-  background: #e8e8e8;
-  box-shadow: inset 0 2px 2px #b5b5b5;
+  background: rgb(232.25, 232.25, 232.25);
+  box-shadow: inset 0 2px 2px rgb(181.25, 181.25, 181.25);
 }
 .sidebar li.menu-item.current_page_item > a,
 .sidebar li.menu-item.current-menu-item > a {
@@ -650,7 +650,7 @@ ul.header-social-links li {
 .sidebar .wp-widget.widget_bc_location_widget,
 .sidebar .wp-widget.widget_listcategorypostswidget,
 .sidebar .wp-widget.gform_widget {
-  box-shadow: 0 2px 2px gainsboro;
+  box-shadow: 0 2px 2px rgb(219.5, 219.5, 219.5);
 }
 .sidebar .wp-widget.widget_archive select,
 .sidebar .wp-widget.widget_categories select {
