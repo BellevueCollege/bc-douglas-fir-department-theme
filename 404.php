@@ -32,7 +32,7 @@ get_header(); ?>
 			<ol>
 				<li>If you typed the web address, double-check if you typed it correctly.</li>
 				<li>Try searching for it.<?php get_search_form(); ?></li>
-				<li>Browse our <a href="//www.bellevuecollege.edu/directories/az/">A-Z directory</a>.</li>
+				<li>Browse our <a href="https://www.bellevuecollege.edu/about-us/departments-offices/"> Departments &amp; Offices Directory</a>.</li>
 				<li>Use some of the links on this page.</li>
 				<li >Click the <a href="javascript:history.go(-1)">Back</a> button and try another link.</li>
 			</ol>

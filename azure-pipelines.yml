@@ -1,6 +1,13 @@
 trigger:
-- trunk
-- dev
+  branches:
+   include:
+     - trunk
+pr:
+ branches:
+   include:
+     - trunk
+     - hotfix-*
+     - release-*
 variables:
 - name: versionStamp
   value: '[Build: $(Build.BuildNumber). Commit: $(Build.SourceVersion)]'
@@ -22,6 +29,11 @@ steps:
     tokenSuffix: '}#'
     useLegacyPattern: false
     enableTelemetry: true
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run build:dev'
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 - task: Npm@1
   inputs:
     command: 'custom'
