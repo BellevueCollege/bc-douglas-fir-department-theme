@@ -131,8 +131,8 @@ if ( ! function_exists( 'bc_douglas_fir_pagination' ) ) {
 				'format'             => '?paged=%#%',
 				'current'            => max( 1, get_query_var( 'paged' ) ),
 				'type'               => 'array',
-				'prev_text'          => '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="sr-only">Previous Page</span>',
-				'next_text'          => '<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next Page</span>',
+				'prev_text'          => '<i class="fa-solid fa-chevron-left" aria-label="Previous Page"></i><span class="sr-only">Previous Page</span>',
+				'next_text'          => '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next Page</span>',
 				'before_page_number' => '<span class="sr-only">Page</span>',
 			)
 		);

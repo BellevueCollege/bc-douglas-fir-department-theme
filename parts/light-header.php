@@ -68,28 +68,28 @@ global $post, $bc_douglas_fir_options, $bc_douglas_fir_brand_css, $mayflower_the
 										">
 				<?php if ( ! empty( $bc_douglas_fir_options['facebook'] ) ) { ?>
 					<a class="px-2 py-1" href="<?php echo esc_url( $bc_douglas_fir_options['facebook'] ); ?>" title="Facebook">
-						<i class="fab fa-facebook-square" aria-hidden="true"></i>
+						<i class="fa-brands fa-square-facebook" aria-hidden="true"></i>
 						<span class="sr-only">Facebook</span></a>
 					</a>
 				<?php } ?>
 
 				<?php if ( ! empty( $bc_douglas_fir_options['youtube'] ) ) { ?>
 					<a class="px-2 py-1" href="<?php echo esc_url( $bc_douglas_fir_options['youtube'] ); ?>" title="YouTube">
-						<i class="fab fa-youtube-square" aria-hidden="true"></i>
+						<i class="fa-brands fa-square-youtube" aria-hidden="true"></i>
 						<span class="sr-only">YouTube</span></a>
 					</a>
 				<?php } ?>
 
 				<?php if ( ! empty( $bc_douglas_fir_options['instagram'] ) ) { ?>
 					<a class="px-2 py-1" href="<?php echo esc_url( $bc_douglas_fir_options['instagram'] ); ?>" title="Instagram">
-						<i class="fab fa-instagram" aria-hidden="true"></i>
+						<i class="fa-brands fa-instagram" aria-hidden="true"></i>
 						<span class="sr-only">Instagram</span></a>
 					</a>
 				<?php } ?>
 
 				<?php if ( ! empty( $bc_douglas_fir_options['linkedin'] ) ) { ?>
 					<a class="px-2 py-1" href="<?php echo esc_url( $bc_douglas_fir_options['linkedin'] ); ?>" title="LinkedIn">
-						<i class="fab fa-linkedin" aria-hidden="true"></i>
+						<i class="fa-brands fa-linkedin" aria-hidden="true"></i>
 						<span class="sr-only">LinkedIn</span></a>
 					</a>
 				<?php } ?>

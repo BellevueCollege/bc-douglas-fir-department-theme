@@ -48,7 +48,7 @@ $filter_peram       = 'scope'; // Hardcoded default.
 				</button>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="<?php echo esc_url( $search_url ); ?>" id="college-search-site-link">Search <?php bloginfo( 'name' ); ?></a>
-					<a class="dropdown-item" href="<?php echo esc_url( $search_url_default ); ?>" id="college-search-all-link">Search Bellevue College <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+					<a class="dropdown-item" href="<?php echo esc_url( $search_url_default ); ?>" id="college-search-all-link">Search Bellevue College <i class="fa-solid fa-up-right-from-square"></i></a>
 				</div>
 			<?php endif; // limit searchform scope. ?>
 		</div>

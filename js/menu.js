@@ -22,8 +22,8 @@ jQuery('.sidebar').on('click', '.menu-expand-button', function( event ) {
 });
 
 function expandLink( linkText ) {
-	return '<a class="menu-expand-button" href="#" aria-expanded="false"><i class="fas fa-chevron-down" aria-hidden="true"></i><span class="sr-only">Expand ' + linkText + ' Submenu</span></a>';
+	return '<a class="menu-expand-button" href="#" aria-expanded="false"><i class="fa-solid fa-chevron-down"></i><span class="sr-only">Expand ' + linkText + ' Submenu</span></a>';
 }
 function collapseLink( linkText ) {
-	return '<a class="menu-expand-button expanded" href="#" aria-expanded="true"><i class="fas fa-minus" aria-hidden="true"></i><span class="sr-only">Collapse ' + linkText + ' Submenu</span></a';
+	return '<a class="menu-expand-button expanded" href="#" aria-expanded="true"><i class="fa-solid fa-minus"></i><span class="sr-only">Collapse ' + linkText + ' Submenu</span></a';
 }

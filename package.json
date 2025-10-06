@@ -17,7 +17,7 @@
     "popper.js": "^1.16.1"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@fortawesome/fontawesome-free": "^7.1.0",
     "@wordpress/eslint-plugin": "^22.7.0",
     "bootstrap": "^4.6.2",
     "globals": "github:BellevueCollege/globals#trunk",
