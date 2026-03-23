@@ -6,9 +6,12 @@ jQuery(document).ready(function ($) {
 	});
 
 	$( '#main img[alt=""]' ).each(function () {
-		this.setAttribute('data-toggle', 'tooltip');
-		this.setAttribute('data-placement', 'auto top');
-		this.setAttribute('title', '⚠️ Notice: There is no Alternative Text provided for this image. This is only allowed if this image is purely decorative.');
+		if (!$(this).hasClass('a11y-decorative')) {
+			console.log('Adding tooltip to image with empty alt attribute');
+			this.setAttribute('data-toggle', 'tooltip');
+			this.setAttribute('data-placement', 'auto top');
+			this.setAttribute('title', '⚠️ Notice: There is no Alternative Text provided for this image. This is only allowed if this image is purely decorative.');
+		}
 	});
 
 	$('#main a > img[alt=""]').each(function () {

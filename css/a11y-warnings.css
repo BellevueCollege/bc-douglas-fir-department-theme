@@ -6,6 +6,10 @@
 	outline: 4px dashed #F2C01E !important;
 }
 
+#main img.a11y-decorative {
+    outline: none !important;
+}
+
 #main img:not([alt]),
 #main a > img[alt=""] {
 	outline: 4px dashed #C4122F !important;
