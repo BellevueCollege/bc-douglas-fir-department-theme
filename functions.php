@@ -373,7 +373,7 @@ add_filter( 'ed11y_default_options', function ( $options ) {
 	$options['ed11y_ignore_elements'] .= ', .a11y-decorative';
 
 	// Disable content auditing within my-calendar plugin, as it's not user-fixable
-	$options['ed11y_ignore_elements'] .= ', #my-calendar, #my-calendar *';
+	$options['ed11y_ignore_elements'] .= ', #my-calendar, #my-calendar *, .mc-main, .mc-main *';
 
 	return $options;
 } );
