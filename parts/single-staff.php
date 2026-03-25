@@ -23,7 +23,7 @@ if ( have_posts() ) :
 					)
 				);
 			} else {
-				echo '<img class="media-object img-fluid img-thumbnail mr-md-3 mb-4" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
+				echo '<img class="media-object img-fluid img-thumbnail mr-md-3 mb-4 a11y-decorative" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
 			}
 		?>
 

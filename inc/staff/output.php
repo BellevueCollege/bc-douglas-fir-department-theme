@@ -38,14 +38,14 @@ if ( 'list-view' === $bc_douglas_fir_options['staff_layout'] && $bc_douglas_fir_
 								'class' => 'img-fluid img-thumbnail',
 								'alt'   => the_title_attribute(
 									array(
-										'after' => ' Picture',
-										'echo'  => false,
+										'after'  => "'s profile",
+										'echo'   => false,
 									)
 								),
 							)
 						);
 					} else {
-						echo '<img class="img-fluid img-thumbnail" alt="Placeholder Image" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
+						echo '<img class="img-fluid img-thumbnail a11y-decorative" alt="' . the_title_attribute( array( 'echo' => false ) ) . '\'s profile" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
 					}
 				}
 				?>
@@ -122,7 +122,7 @@ if ( 'list-view' === $bc_douglas_fir_options['staff_layout'] && $bc_douglas_fir_
 						<?php
 						$content_array = explode( ' ', get_the_content() );
 						$content_count = count( $content_array );
-						echo wp_kses_post( the_excerpt() );
+						echo wp_kses_post( the_excerpt() ?? '' );
 
 						if ( $content_count < 55 ) { // echo excerpt and 'more' link if content is less than 55 words.
 							if ( true === $bc_douglas_fir_options['staff_more_toggle'] ) {
@@ -178,7 +178,7 @@ if ( 'list-view' === $bc_douglas_fir_options['staff_layout'] && $bc_douglas_fir_
 									'class' => 'card-img-top',
 									'alt'   => the_title_attribute(
 										array(
-											'after' => ' Picture',
+											'after' => '\'s profile',
 											'echo'  => false,
 										)
 									),
@@ -188,7 +188,7 @@ if ( 'list-view' === $bc_douglas_fir_options['staff_layout'] && $bc_douglas_fir_
 						</a>
 						<?php
 					} else {
-						echo '<img class="card-img-top" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
+						echo '<img class="card-img-top a11y-decorative" alt="" src="' . esc_url( get_stylesheet_directory_uri() ) . '/img/thumbnail-default.png" />';
 					}
 				}
 				?>

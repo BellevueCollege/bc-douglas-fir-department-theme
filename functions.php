@@ -360,3 +360,20 @@ function mayflower_sitewide_notice() {
 		<?php
 	}
 }
+
+/**
+ * Customize Default Editoria11y Plugin Settings
+ */
+add_filter( 'ed11y_default_options', function ( $options ) {
+
+	// Ignore ACF interfaces that appear in the editor
+	$options['ed11y_ignore_elements'] .= ', .acf-block-fields .acf-table, .acf-block-fields .acf-row, .acf-block-fields a';
+	
+	// Ignore editoria11y decorative images
+	$options['ed11y_ignore_elements'] .= ', .a11y-decorative';
+
+	// Disable content auditing within my-calendar plugin, as it's not user-fixable
+	$options['ed11y_ignore_elements'] .= ', #my-calendar, #my-calendar *, .mc-main, .mc-main *';
+
+	return $options;
+} );
