@@ -13,7 +13,7 @@
   "dependencies": {
     "acorn": "^8.11.0",
     "jquery": "^1.12.4",
-    "npm": "^11.3.0",
+    "npm": "^11.10.0",
     "popper.js": "^1.16.1"
   },
   "devDependencies": {
@@ -29,8 +29,13 @@
     "start": "node_modules/sass/sass.js --style=expanded --embed-source-map --watch --load-path=node_modules/boostrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
     "build:dev": "node_modules/sass/sass.js --style=expanded --embed-source-map --load-path=node_modules/boostrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
     "build:prod": "node_modules/sass/sass.js --style=compressed --no-source-map --load-path=node_modules/boostrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
-    "build" : "npm run build:prod"
+    "build": "npm run build:prod"
   },
   "author": "Bellevue College ITS",
-  "license": "GPL-2.0"
+  "license": "GPL-2.0",
+  "allowScripts": {
+    "@parcel/watcher@2.5.6": true,
+    "core-js": false,
+    "unrs-resolver": false
+  }
 }
