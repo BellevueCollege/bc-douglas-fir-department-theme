@@ -392,6 +392,12 @@ add_filter( 'register_block_type_args', function( $args, $block_type ) {
 		'core/pullquote',
 	];
 	if ( in_array( $block_type, $blocks, true ) ) {
+		if ( ! isset( $args['supports'] ) || ! is_array( $args['supports'] ) ) {
+			$args['supports'] = array();
+		}
+		if ( ! isset( $args['supports']['typography'] ) || ! is_array( $args['supports']['typography'] ) ) {
+			$args['supports']['typography'] = array();
+		}
 		$args['supports']['typography']['fitText'] = false;
 	}
 	return $args;
