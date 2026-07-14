@@ -110,11 +110,17 @@ class Globals {
 
 		/**
 		 * Globals Path (local filesystem)
+		 *
+		 * When append is enabled, prepend DOCUMENT_ROOT to the configured path
+		 * (e.g. /var/www/html + /g/4/). Accepts boolean true (Customizer) and
+		 * legacy "1" values; the old `( "1" || true ) ===` check only matched
+		 * boolean true because PHP's || returns a boolean.
 		 */
-		$this->path = (
-				! empty( $this->get_globals_option( 'globals_path' ) ) && ( "1" || true ) === $this->get_globals_option( 'globals_append_path' )
-			) ? $_SERVER['DOCUMENT_ROOT'] . $this->get_globals_option( 'globals_path' ) :
-			$this->get_globals_option( 'globals_path' );
+		$globals_path        = $this->get_globals_option( 'globals_path' );
+		$should_append_path  = ! empty( $this->get_globals_option( 'globals_append_path' ) );
+		$this->path          = ( ! empty( $globals_path ) && $should_append_path )
+			? $_SERVER['DOCUMENT_ROOT'] . $globals_path
+			: $globals_path;
 
 		$this->path = apply_filters( 'bc_douglas_fir_globals_path', $this->path );
 
@@ -159,7 +165,9 @@ class Globals {
 	 */
 	public function tophead() {
 		$header_top = $this->html_filepath . $this->lhead_filename;
-		include_once $header_top;
+		if ( file_exists( $header_top ) ) {
+			include_once $header_top;
+		}
 	}
 
 	/**
@@ -167,7 +175,9 @@ class Globals {
 	 */
 	public function tophead_big() {
 		$header_top_big = $this->html_filepath . $this->bhead_filename;
-		include_once $header_top_big;
+		if ( file_exists( $header_top_big ) ) {
+			include_once $header_top_big;
+		}
 	}
 
 	/**
@@ -184,7 +194,9 @@ class Globals {
 	 */
 	public function big_footer() {
 		$footer = $this->html_filepath . $this->bfoot_filename;
-		include_once $footer;
+		if ( file_exists( $footer ) ) {
+			include_once $footer;
+		}
 	}
 
 	/**
@@ -192,7 +204,9 @@ class Globals {
 	 */
 	public function footer_legal() {
 		$footerlegal = $this->html_filepath . $this->legal_filename;
-		include_once $footerlegal;
+		if ( file_exists( $footerlegal ) ) {
+			include_once $footerlegal;
+		}
 	}
 
 	/**
@@ -200,8 +214,9 @@ class Globals {
 	 */
 	public function analytics() {
 		$ga_code = $this->html_filepath . $this->galite_filename;
-
-		include_once $ga_code;
+		if ( file_exists( $ga_code ) ) {
+			include_once $ga_code;
+		}
 
 		if ( bc_douglas_fir_get_option( 'ga_code' ) ) :
 

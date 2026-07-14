@@ -215,12 +215,26 @@ remove_action( 'wp_head', 'wp_generator' );
  */
 
 /**
- * Enqueue block editor style
+ * Enqueue block editor canvas styles.
+ *
+ * Uses enqueue_block_assets so styles reach both the iframed and legacy
+ * (non-iframe) block editor content documents. Guarded to admin only so
+ * this sheet is not printed on the frontend.
  */
 function mayflower_block_editor_styles() {
-	wp_enqueue_style( 'mayflower-block-editor-styles', get_theme_file_uri( 'css/block-editor.css' ), false, '1.1', 'all' );
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'mayflower-block-editor-styles',
+		get_theme_file_uri( 'css/block-editor.css' ),
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		'all'
+	);
 }
-add_action( 'enqueue_block_editor_assets', 'mayflower_block_editor_styles' );
+add_action( 'enqueue_block_assets', 'mayflower_block_editor_styles' );
 
 /**
  * Disable blocks

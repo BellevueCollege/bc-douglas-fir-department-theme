@@ -1,5 +1,5 @@
 /* Custom Editor Styles
- * Loaded in the TinyMCE Visual Editor
+ * Loaded in the block editor canvas (iframed and legacy non-iframe).
  */
 
 /* Not SCSS, so can't use vars. Just here for reference! *
@@ -7,7 +7,6 @@ $brand-info:            #afd7ff; // Lightened BC Brand Blue to meet a11y require
 $brand-warning:         #F2C01E; // BC Brand Yellow
 $brand-danger:          #C4122F; // BC Brand Red
 */
-
 /* Import from Globals */
 
 
@@ -15,6 +14,11 @@ $brand-danger:          #C4122F; // BC Brand Red
 	@import "partials/base";
 
 	@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+	// Globals sets $fa-font-path to '../f'; theme CSS is served from css/, so point
+	// @font-face at the FA package webfonts that remain after npm ci --omit=dev.
+	$fa-font-path: '../node_modules/@fortawesome/fontawesome-free/webfonts';
+
 	@import "fontawesome";
 	@import "solid";
 	@import "brands";
@@ -48,9 +52,7 @@ $brand-danger:          #C4122F; // BC Brand Red
 }
 
 /* Images - alt text issues */
-
-body.gutenberg-editor-page .editor-block-list__block {
-
+.wp-block {
 	img[alt=""] {
 		outline: 4px dashed #f2c01e;
 		outline-offset: 0.25em;
@@ -61,18 +63,15 @@ body.gutenberg-editor-page .editor-block-list__block {
 		outline: 4px dashed #c4122f;
 		outline-offset: 0.25em;
 	}
-
 }
 
-
-/* Style things */
-div.edit-post-visual-editor.editor-styles-wrapper {
-	font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+/* Canvas base font — shared root in iframed and legacy editors */
+.editor-styles-wrapper {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-/* Style Quote Block */
-body.gutenberg-editor-page .editor-block-list__block {
-
+/* Alignments, captions, and quote block */
+.editor-styles-wrapper {
 	.alignnone {
 		margin: 20px 20px 5px 0;
 	}
@@ -152,13 +151,10 @@ body.gutenberg-editor-page .editor-block-list__block {
 			color: #777;
 		}
 	}
-
 }
 
 @media screen and (min-width: 768px) {
-
-	body.gutenberg-editor-page .editor-block-list__block {
-
+	.editor-styles-wrapper {
 		.alignright {
 			float: right;
 			margin: 0.5em 0 1em 1em;

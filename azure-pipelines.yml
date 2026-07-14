@@ -14,10 +14,16 @@ variables:
 pool:
   vmImage: "ubuntu-latest"
 steps:
+- task: UseNode@1
+  inputs:
+    version: '24.x'
+  displayName: 'Install Node.js 24'
+- script: npm install -g npm@11.16.0
+  displayName: 'Force correct NPM version'
 - task: Npm@1
   inputs:
-    command: 'install'
-- task: replacetokens@3
+    command: 'ci'
+- task: replacetokens@6
   inputs:
     rootDirectory: 'sass'
     targetFiles: 'style.scss'
@@ -44,12 +50,8 @@ steps:
     command: 'custom'
     customCommand: 'run build'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/trunk'))
-- task: DeleteFiles@1
-  inputs:
-    SourceFolder:
-    Contents: |
-      node_modules
-      package*
+- script: npm ci --omit=dev
+  displayName: 'Reinstall production dependencies only'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: './'

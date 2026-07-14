@@ -368,7 +368,7 @@ add_filter( 'ed11y_default_options', function ( $options ) {
 
 	// Ignore ACF interfaces that appear in the editor
 	$options['ed11y_ignore_elements'] .= ', .acf-block-fields .acf-table, .acf-block-fields .acf-row, .acf-block-fields a';
-	
+
 	// Ignore editoria11y decorative images
 	$options['ed11y_ignore_elements'] .= ', .a11y-decorative';
 
@@ -377,3 +377,28 @@ add_filter( 'ed11y_default_options', function ( $options ) {
 
 	return $options;
 } );
+
+/**
+ * Disable FitText in Editor
+ *
+ * This shouldn't be needed (it is included in theme.json), but that is not working consistently.
+ */
+add_filter( 'register_block_type_args', function( $args, $block_type ) {
+	$blocks = [
+		'core/heading',
+		'core/paragraph',
+		'core/verse',
+		'core/quote',
+		'core/pullquote',
+	];
+	if ( in_array( $block_type, $blocks, true ) ) {
+		if ( ! isset( $args['supports'] ) || ! is_array( $args['supports'] ) ) {
+			$args['supports'] = array();
+		}
+		if ( ! isset( $args['supports']['typography'] ) || ! is_array( $args['supports']['typography'] ) ) {
+			$args['supports']['typography'] = array();
+		}
+		$args['supports']['typography']['fitText'] = false;
+	}
+	return $args;
+}, 10, 2 );
