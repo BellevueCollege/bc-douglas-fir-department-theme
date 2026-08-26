@@ -1,6 +1,6 @@
 {
   "name": "bc-douglas-fir-department-theme",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "description": "The Bellevue College Theme",
   "main": " ",
   "browserslist": [
@@ -34,7 +34,7 @@
   "author": "Bellevue College ITS",
   "license": "GPL-2.0",
   "allowScripts": {
-    "@parcel/watcher@2.5.6": true,
+    "@parcel/watcher@2.6.0": true,
     "core-js": false,
     "unrs-resolver": false
   }
