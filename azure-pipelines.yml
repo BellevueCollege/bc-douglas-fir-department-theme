@@ -17,10 +17,6 @@ pr:
       - release-v*
       - hotfix-v*
 
-variables:
-  - name: versionStamp
-    value: '[Build: $(Build.BuildNumber). Commit: $(Build.SourceVersion)]'
-
 resources:
   repositories:
     - repository: templates
