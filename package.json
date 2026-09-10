@@ -1,6 +1,6 @@
 {
   "name": "bc-douglas-fir-department-theme",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "The Bellevue College Theme",
   "main": " ",
   "browserslist": [
@@ -11,18 +11,17 @@
     "not dead"
   ],
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.2.0"
+    "@fortawesome/fontawesome-free": "^6.7.2"
   },
   "devDependencies": {
-    "@wordpress/eslint-plugin": "^22.7.0",
+    "@wordpress/eslint-plugin": "^25.10.0",
     "bootstrap": "^4.6.2",
     "globals": "github:BellevueCollege/globals#trunk",
     "prettier": "^3.2.5",
     "sass": "^1.71.1",
-    "stylelint": "^16.2.1",
+    "stylelint": "^17.14.1",
 		"acorn": "^8.11.0",
     "jquery": "^1.12.4",
-    "npm": "^11.10.0",
     "popper.js": "^1.16.1"
   },
   "scripts": {

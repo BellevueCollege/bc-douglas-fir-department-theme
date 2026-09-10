@@ -38,5 +38,11 @@ test/out-fixtures/*
 test/watch-*.txt
 gulp.1
 
+# NPM-built CSS (compiled from sass/)
+/style.css
+/style.css.map
+/css/block-editor.css
+/css/block-editor.css.map
+
 # Composer stuff - composer is not currently used within BC Douglas Fir Theme, so this ignores ALL composer files
 vendor

@@ -1,0 +1,38 @@
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: BellevueCollege/bc-wordpress-devops-templates
+      endpoint: github-service-connection
+
+  pipelines:
+    - pipeline: ci
+      source: 'bc-douglas-fir-department-theme'
+      trigger:
+        branches:
+          include:
+            - 'refs/tags/v*'
+
+extends:
+  template: templates/release/theme-release.yml@templates
+  parameters:
+
+    themeName: 'bc-douglas-fir-department-theme'
+    githubRepo: 'bc-douglas-fir-department-theme'
+
+    productionEnvironments:
+      - name: KinstaProd
+        displayName: 'Kinsta: Production'
+        environment: kinsta-wwwbellevuecollegeedu
+        sshServiceConnection: wwwbellevuecollegeedu
+        variableGroup: kinsta-wwwbellevuecollegeedu
+
+      - name: FormsInstall1
+        displayName: 'On Site: Forms (Install 1)'
+        environment: onprem-forms
+        sshServiceConnection: formsprod-c1
+        variableGroup: onprem-forms
+        agentPool: Default
