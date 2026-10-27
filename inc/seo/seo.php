@@ -75,11 +75,11 @@ echo '<input type="hidden" name="seo_seo_meta_box_nonce" value="'.wp_create_nonc
 					break;
 
 					case 'text_area':
-					
-					case 'textarea':  
-					    echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="58" rows="4">'.$meta.'</textarea> 
-					        <br /><span class="description">'.$field['desc'].'</span>';  
-					break;  
+
+					case 'textarea':
+					    echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="58" rows="4">'.$meta.'</textarea>
+					        <br /><span class="description">'.$field['desc'].'</span>';
+					break;
 
 
 
@@ -89,35 +89,58 @@ echo '<input type="hidden" name="seo_seo_meta_box_nonce" value="'.wp_create_nonc
 	echo '</table>'; // end table
 }
 
-// Save the Data
-function save_seo_meta($post_id) {
-    global $seo_seo_meta_fields;
-	// verify nonce
+/**
+ * Save SEO meta box values when a post or page is updated.
+ *
+ * @param int $post_id Post being saved.
+ * @return int Post ID.
+ */
+function save_seo_meta( $post_id ) {
+	global $seo_seo_meta_fields;
 
-	// verify nonce
-	if ( !isset( $_POST['seo_seo_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['seo_seo_meta_box_nonce'], basename( __FILE__ ) ) )
+	if ( ! isset( $_POST['seo_seo_meta_box_nonce'] ) ) {
 		return $post_id;
-
-	// check autosave
-	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-		return $post_id;
-	// check permissions
-	if ('page' == $_POST['post_type']) {
-		if (!current_user_can('edit_page', $post_id))
-			return $post_id;
-		} elseif (!current_user_can('edit_post', $post_id)) {
-			return $post_id;
 	}
-	// loop through fields and save the data
-	foreach ($seo_seo_meta_fields as $field) {
-		$old = get_post_meta($post_id, $field['id'], true);
-		$new = $_POST[$field['id']];
-		if ($new && $new != $old) {
-			update_post_meta($post_id, $field['id'], $new);
-		} elseif ('' == $new && $old) {
-			delete_post_meta($post_id, $field['id'], $old);
+
+	$nonce = sanitize_text_field( wp_unslash( $_POST['seo_seo_meta_box_nonce'] ) );
+	if ( ! wp_verify_nonce( $nonce, basename( __FILE__ ) ) ) {
+		return $post_id;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return $post_id;
+	}
+
+	$post_type = get_post_type( $post_id );
+	if ( 'page' === $post_type ) {
+		if ( ! current_user_can( 'edit_page', $post_id ) ) {
+			return $post_id;
 		}
-	} // end foreach
+	} elseif ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return $post_id;
+	}
+
+	foreach ( $seo_seo_meta_fields as $field ) {
+		// Autosave and bulk actions may omit meta box fields.
+		if ( ! isset( $_POST[ $field['id'] ] ) ) {
+			continue;
+		}
+
+		$old = get_post_meta( $post_id, $field['id'], true );
+		$raw = wp_unslash( $_POST[ $field['id'] ] );
+
+		if ( 'text_area' === $field['type'] || 'textarea' === $field['type'] ) {
+			$new = sanitize_textarea_field( $raw );
+		} else {
+			$new = sanitize_text_field( $raw );
+		}
+
+		if ( $new && $new !== $old ) {
+			update_post_meta( $post_id, $field['id'], $new );
+		} elseif ( '' === $new && $old ) {
+			delete_post_meta( $post_id, $field['id'], $old );
+		}
+	}
 }
 add_action('save_post', 'save_seo_meta');
 

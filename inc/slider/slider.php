@@ -172,7 +172,9 @@ function slider_order_page() {
  */
 function bc_douglas_fir_slider_enqueue_scripts() {
 	wp_enqueue_script( 'jquery-ui-sortable' );
-	wp_enqueue_script( 'bc-douglas-fir-admin-scripts', get_template_directory_uri() . '/js/sorting-v2.js', null, '1', false );
+	wp_enqueue_script( 'bc-douglas-fir-admin-scripts', get_template_directory_uri() . '/js/sorting-v2.js', array( 'jquery', 'jquery-ui-sortable' ), '1', false );
+	// sorting-v2.js posts menu order updates; nonce must match the AJAX handler in functions.php.
+	bc_douglas_fir_localize_post_order_script( 'bc-douglas-fir-admin-scripts' );
 }
 add_action( 'admin_enqueue_scripts', 'bc_douglas_fir_slider_enqueue_scripts' );
 
@@ -341,8 +343,12 @@ function show_slider_ext_url() {
 function save_slider_custom_meta( $post_id ) {
 	global $slider_custom_meta_fields;
 
-	// verify nonce.
-	if ( ! isset( $_POST['custom_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['custom_meta_box_nonce'], basename( __FILE__ ) ) ) {
+	if ( ! isset( $_POST['custom_meta_box_nonce'] ) ) {
+		return $post_id;
+	}
+
+	$nonce = sanitize_text_field( wp_unslash( $_POST['custom_meta_box_nonce'] ) );
+	if ( ! wp_verify_nonce( $nonce, basename( __FILE__ ) ) ) {
 		return $post_id;
 	}
 
@@ -350,21 +356,31 @@ function save_slider_custom_meta( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return $post_id;
 	}
-	// check permissions.
-	if ( 'page' == $_POST['post_type'] ) {
+
+	// Use the saved post's type, not $_POST, so slider CPT saves get edit_post checks.
+	$post_type = get_post_type( $post_id );
+	if ( 'page' === $post_type ) {
 		if ( ! current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		}
 	} elseif ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return $post_id;
 	}
-	// loop through fields and save the data.
+
 	foreach ( $slider_custom_meta_fields as $field ) {
+		// Autosave and bulk actions may omit meta box fields.
+		if ( ! isset( $_POST[ $field['id'] ] ) ) {
+			continue;
+		}
+
 		$old = get_post_meta( $post_id, $field['id'], true );
-		$new = $_POST[ $field['id'] ];
-		if ( $new && $new != $old ) {
+		$raw = wp_unslash( $_POST[ $field['id'] ] );
+		// Slide URL is stored as a plain URL string.
+		$new = 'url' === $field['type'] ? esc_url_raw( $raw ) : sanitize_text_field( $raw );
+
+		if ( $new && $new !== $old ) {
 			update_post_meta( $post_id, $field['id'], $new );
-		} elseif ( '' == $new && $old ) {
+		} elseif ( '' === $new && $old ) {
 			delete_post_meta( $post_id, $field['id'], $old );
 		}
 	} // end foreach

@@ -286,12 +286,19 @@ function is_multisite_home() {
  *
  * @link https://stackoverflow.com/a/4357691 Inspiration for this class.
  * @link https://github.com/BellevueCollege/bc-st-search-client Primary plugin that uses this.
- * @return string $output Trimmed URL of current site.
+ * @return string Host and path only (no scheme), for search scope filters.
  */
 function bc_douglas_fir_trimmed_url() {
 	$site_url = get_site_url( null, '', 'https' );
 	$parsed   = wp_parse_url( $site_url );
-	$output   = $parsed['host'] . $parsed['path'] ?? '';
+	$output   = '';
+
+	if ( is_array( $parsed ) ) {
+		// Path is often omitted for sites installed at the domain root.
+		$host = $parsed['host'] ?? '';
+		$path = $parsed['path'] ?? '';
+		$output = $host . $path;
+	}
 
 	/**
 	 * Filter BC Douglas Fir Theme Trimmed URL
@@ -318,23 +325,47 @@ $bc_douglas_fir_brand_css = 'globals-lite';
 
 
 /**
- * BC Douglas Fir Theme CPT Update Post Order action hook
+ * Save menu order after drag-and-drop on Staff or Slider sort screens.
  *
- * Save post order on custom post order page used by Staff and Slider
+ * Called via AJAX from js/sorting-v2.js. Only staff and slider posts are updated.
  */
 function bc_douglas_fir_cpt_update_post_order() {
+	check_ajax_referer( 'bc_douglas_fir_cpt_update_post_order' );
 
-	$post_type = isset( $_POST['postType'] ) ? wp_unslash( $_POST['postType'] ) : null;
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		wp_die( '0', 403 );
+	}
+
+	$post_type = isset( $_POST['postType'] ) ? sanitize_key( wp_unslash( $_POST['postType'] ) ) : '';
 	$order     = isset( $_POST['order'] ) ? wp_unslash( $_POST['order'] ) : null;
 
-	/**
-	*    Expect: $sorted = array(
-	*                menu_order => post-XX
-	*            );
-	*/
-	foreach ( $order as $menu_order => $post_id ) {
-		$post_id    = intval( str_ireplace( 'post-', '', $post_id ) );
+	$allowed_post_types = array( 'staff', 'slider' );
+	if ( ! in_array( $post_type, $allowed_post_types, true ) ) {
+		wp_die( '0', 400 );
+	}
+
+	if ( ! is_array( $order ) || empty( $order ) ) {
+		wp_die( '0', 400 );
+	}
+
+	// jQuery UI sortable returns row IDs like post-123 keyed by new menu_order.
+	foreach ( $order as $menu_order => $post_id_raw ) {
+		$post_id    = intval( str_ireplace( 'post-', '', (string) $post_id_raw ) );
 		$menu_order = intval( $menu_order );
+
+		if ( $post_id <= 0 ) {
+			continue;
+		}
+
+		$post = get_post( $post_id );
+		if ( ! $post instanceof WP_Post || $post->post_type !== $post_type ) {
+			continue;
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			continue;
+		}
+
 		wp_update_post(
 			array(
 				'ID'         => $post_id,
@@ -342,9 +373,25 @@ function bc_douglas_fir_cpt_update_post_order() {
 			)
 		);
 	}
+
 	die( '1' );
 }
 add_action( 'wp_ajax_bc_douglas_fir_cpt_update_post_order', 'bc_douglas_fir_cpt_update_post_order' );
+
+/**
+ * Supply the AJAX nonce expected by bc_douglas_fir_cpt_update_post_order().
+ *
+ * @param string $script_handle Registered handle for sorting-v2.js (must match wp_enqueue_script).
+ */
+function bc_douglas_fir_localize_post_order_script( $script_handle ) {
+	wp_localize_script(
+		$script_handle,
+		'bcDouglasFirPostOrder',
+		array(
+			'nonce' => wp_create_nonce( 'bc_douglas_fir_cpt_update_post_order' ),
+		)
+	);
+}
 
 /**
  * Sitewide Notice

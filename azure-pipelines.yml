@@ -51,6 +51,9 @@ extends:
           tokenSuffix: '}#'
         displayName: 'Inject Version into sass/style.scss'
 
+      - script: composer install --no-interaction --no-progress && composer run phpcs
+        displayName: 'PHP Compatibility (8.2–8.5)'
+
       - task: Npm@1
         inputs:
           command: 'custom'

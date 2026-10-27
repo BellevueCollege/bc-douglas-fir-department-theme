@@ -2,6 +2,13 @@
 
 This is Bellevue College's "Douglas Fir" theme for college departments. It is a successor to the "Mayflower G4" theme, with functionality not related to department websites removed.
 
+## Requirements
+
+- **WordPress:** 7.0 or newer
+- **PHP:** 8.2 through 8.5 (inclusive)
+
+CI runs [PHPCompatibilityWP](https://github.com/PHPCompatibilityWP/PHPCompatibilityWP) against that PHP range. After changing PHP sources, run `composer install` and `composer run phpcs` locally.
+
 ## Naming Conventions
 
 This theme adopts 'evergreens of Washington' as the naming convention for in-house themes. The theme is named after the Douglas Fir, a tree native to the Pacific Northwest.

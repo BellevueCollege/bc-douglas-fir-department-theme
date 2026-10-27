@@ -20,28 +20,52 @@ add_shortcode( 'multicoursedescription', 'multi_coursedescription_func' ); // de
  *****************************/
 
 
-// function for rendering single course shortcode into HTML
+/**
+ * Render one course from the BC course API.
+ *
+ * Shortcode: [coursedescription subject="ENGL" courseid="A 101" description="true"]
+ * courseid is a letter prefix and number separated by a space.
+ *
+ * @param array $atts Shortcode attributes.
+ * @return string HTML for the course, or empty string when attributes or API data are missing.
+ */
 function coursedescription_func( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'subject'     => '',
+			'courseid'    => '',
+			'description' => '',
+		),
+		$atts,
+		'coursedescription'
+	);
+
 	$subject     = $atts['subject'];
-	$course      = $atts['courseid'];// Attribute name should always read in lower case.
+	$course      = $atts['courseid'];
 	$description = $atts['description'];
-	if ( ! empty( $course ) && ! empty( $subject ) ) {
-		$course_split  = explode( ' ', $course );
-		$course_letter = $course_split[0];
-		$course_id     = $course_split[1];
-		$subject       = trim( html_entity_decode( $subject ) );
-		// $url = "http://www.bellevuecollege.edu/classes/All/".$subject."?format=json";
 
-		$url  = 'https://www2.bellevuecollege.edu/data/api/v1/course/' . urlencode( $subject ) . '/' . urlencode( trim( $course_id ) );
-		$data = wp_remote_get( $url );
-
-		if ( ! empty( $data ) && ! empty( $data['body'] ) && ! empty( $data['body'] ) ) {
-			$json = json_decode( $data['body'] );
-			$html = mayflower_decode_json_class_info( $json, $description );
-			return $html;
-		}
+	if ( empty( $course ) || empty( $subject ) ) {
+		return '';
 	}
-	return null;
+
+	// courseid must contain both the course letter group and the numeric id.
+	$course_split = explode( ' ', trim( $course ) );
+	if ( count( $course_split ) < 2 ) {
+		return '';
+	}
+
+	$course_id = $course_split[1];
+	$subject   = trim( html_entity_decode( $subject ) );
+
+	$url  = 'https://www2.bellevuecollege.edu/data/api/v1/course/' . urlencode( $subject ) . '/' . urlencode( trim( $course_id ) );
+	$data = wp_remote_get( $url );
+
+	if ( ! empty( $data ) && ! empty( $data['body'] ) ) {
+		$json = json_decode( $data['body'] );
+		return mayflower_decode_json_class_info( $json, $description );
+	}
+
+	return '';
 }
 
 // process json returned by API call
@@ -86,50 +110,76 @@ function mayflower_course_html( $data, $show_description = false ) {
 
 
 
-// function for rendering multicourse shortcode into HTML
+/**
+ * Render multiple courses from the BC multicourse API.
+ *
+ * Shortcode: [multicoursedescription courses="ENGL 101,MATH 141" description="true"]
+ *
+ * @param array $atts Shortcode attributes.
+ * @return string HTML for all courses, or empty string when attributes or API data are missing.
+ */
 function multi_coursedescription_func( $atts ) {
-	$courses = $atts['courses'];    // provided course ids
-	// var_dump($courses);
-	$description = $atts['description']; // whether to include descriptions
-	if ( ! empty( $courses ) ) {
-		// error_log("course :".$course);
-		$course_split = explode( ',', $courses );
-		$url          = API_MULTICOURSE_URL;
+	$atts = shortcode_atts(
+		array(
+			'courses'     => '',
+			'description' => '',
+		),
+		$atts,
+		'multicoursedescription'
+	);
 
-		// build query string for URL
-		$qs = '';
-		foreach ( $course_split as $course ) {
-			if ( ! empty( $qs ) ) {
-				$qs .= '&';
-			}
-			$qs .= 'courses[]=' . urlencode( html_entity_decode( strtoupper( $course ) ) );
-		}
-		$url .= '?' . $qs;
+	$courses     = $atts['courses'];
+	$description = $atts['description'];
 
-		$json = wp_remote_get( $url );    // make API call
-
-		if ( ! empty( $json ) && ! empty( $json['body'] ) ) {
-			$html = process_multicourse_json( $json['body'], $description ); // process returned json
-			return $html;
-		}
+	if ( empty( $courses ) ) {
+		return '';
 	}
-	return null;
+
+	$course_split = explode( ',', $courses );
+	$url          = API_MULTICOURSE_URL;
+
+	// build query string for URL
+	$qs = '';
+	foreach ( $course_split as $course ) {
+		if ( ! empty( $qs ) ) {
+			$qs .= '&';
+		}
+		$qs .= 'courses[]=' . urlencode( html_entity_decode( strtoupper( $course ) ) );
+	}
+	$url .= '?' . $qs;
+
+	$json = wp_remote_get( $url );
+
+	if ( ! empty( $json ) && ! empty( $json['body'] ) ) {
+		return process_multicourse_json( $json['body'], $description );
+	}
+
+	return '';
 }
 
-// process json returned by API call
+/**
+ * Turn multicourse API JSON into a block of course HTML.
+ *
+ * @param string      $json_string Raw response body.
+ * @param string|null $description When "true", include course descriptions in output.
+ * @return string HTML wrapper, or empty string when JSON is invalid.
+ */
 function process_multicourse_json( $json_string, $description = null ) {
 	$json = json_decode( $json_string, true );
-	// var_dump($json);
-	$html    = '';
-	$courses = $json['courses'];
-	$html   .= "<div class='classDescriptions'>";
-	// loop through any returned courses and output each
-	if ( count( $courses ) > 0 ) {
+	if ( ! is_array( $json ) ) {
+		return '';
+	}
+
+	$courses = $json['courses'] ?? array();
+	$html    = "<div class='classDescriptions'>";
+
+	if ( is_array( $courses ) && ! empty( $courses ) ) {
 		foreach ( $courses as $course ) {
 			$html .= get_course_html( $course, $description );
 		}
 	}
-	$html .= '</div>'; // classDescriptions
+
+	$html .= '</div>';
 
 	return $html;
 }
