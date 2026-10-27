@@ -30,6 +30,7 @@ extends:
 
     themeName: 'bc-douglas-fir-department-theme'
     runComposer: false
+    includeNodeModulesInArtifact: true
 
     testEnvironments:
       - name: KinstaCstage
