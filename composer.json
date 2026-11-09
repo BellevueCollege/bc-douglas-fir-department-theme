@@ -6,7 +6,7 @@
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "wp-coding-standards/wpcs": "^2.2"
+        "wp-coding-standards/wpcs": "^3.4.1"
     },
     "scripts": {
         "phpcs": "phpcs --runtime-set ignore_warnings_on_exit 1"
