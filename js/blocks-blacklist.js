@@ -33,4 +33,12 @@ window.onload = function () {
 
 	// WordPress 6.1.x
 	wp.blocks.unregisterBlockType('core/comments');
+
+	// WordPress 7.0 and 7.1
+	wp.blocks.unregisterBlockType('core/playlist');
+	wp.blocks.unregisterBlockType('core/tabs');
+	wp.blocks.unregisterBlockType('core/tab-list');
+	wp.blocks.unregisterBlockType('core/tab-panels');
+	wp.blocks.unregisterBlockType('core/tab-panel');
+	wp.blocks.unregisterBlockType('core/accordion');
 };

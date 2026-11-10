@@ -13,7 +13,7 @@ $brand-danger:          #C4122F; // BC Brand Red
 .wp-block {
 	@import "partials/base";
 
-	@import "../node_modules/bootstrap/scss/bootstrap.scss";
+	@import "bootstrap";
 
 	// Globals sets $fa-font-path to '../f'; theme CSS is served from css/, so point
 	// @font-face at the FA package webfonts that remain after npm ci --omit=dev.

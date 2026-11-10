@@ -25,9 +25,9 @@
     "popper.js": "^1.16.1"
   },
   "scripts": {
-    "start": "node_modules/sass/sass.js --style=expanded --embed-source-map --watch --load-path=node_modules/boostrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
-    "build:dev": "node_modules/sass/sass.js --style=expanded --embed-source-map --load-path=node_modules/boostrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
-    "build:prod": "node_modules/sass/sass.js --style=compressed --no-source-map --load-path=node_modules/boostrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
+    "start": "node_modules/sass/sass.js --quiet-deps --style=expanded --embed-source-map --watch --load-path=node_modules/bootstrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
+    "build:dev": "node_modules/sass/sass.js --quiet-deps --style=expanded --embed-source-map --load-path=node_modules/bootstrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
+    "build:prod": "node_modules/sass/sass.js --quiet-deps --style=compressed --no-source-map --load-path=node_modules/bootstrap/scss --load-path=node_modules/@fortawesome/fontawesome-free/scss --load-path=node_modules/globals/src/4/sass  sass/style.scss:style.css sass/block-editor.scss:css/block-editor.css",
     "build": "npm run build:prod"
   },
   "author": "Bellevue College ITS",
