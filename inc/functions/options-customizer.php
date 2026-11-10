@@ -1095,12 +1095,11 @@ function bc_douglas_fir_get_options() {
  * Pass option key to get option value.
  *
  * @param string $option Option name.
- * @return string Option value from BC Douglas Fir Theme Options.
+ * @return mixed Option value from theme options, or null if the key is not defined.
  */
 function bc_douglas_fir_get_option( $option ) {
 	$bc_douglas_fir_options = bc_douglas_fir_get_options();
-	$option                 = $bc_douglas_fir_options[ $option ];
-	return $option;
+	return $bc_douglas_fir_options[ $option ] ?? null;
 }
 
 /**

@@ -544,25 +544,29 @@ add_filter( 'nav_menu_css_class', 'mayflower_nav_active_class', 10, 2 );
 /**
  * Async/Defer load
  *
- * Allow insertion of async / defer tags to support loading outside scripts
+ * Allow insertion of async / defer tags to support loading outside scripts.
+ *
+ * Append #asyncload, #deferload, or #asyncdeferload to a script URL when enqueuing;
+ * this filter strips the marker and injects the matching attribute on the front end.
  *
  * @link https://ikreativ.com/async-with-wordpress-enqueue/ Adapted from this!
  * @param string $url URL of script.
  */
 function mayflower_defer_async_scripts( $url ) {
-	if ( strpos( $url, '#asyncload' ) ) {
+	// Use strict comparison; strpos() returns 0 when the marker is at the start of the URL.
+	if ( strpos( $url, '#asyncload' ) !== false ) {
 		if ( is_admin() ) {
 			return str_replace( '#asyncload', '', $url );
 		} else {
 			return str_replace( '#asyncload', '', $url ) . "' async='async";
 		}
-	} elseif ( strpos( $url, '#deferload' ) ) {
+	} elseif ( strpos( $url, '#deferload' ) !== false ) {
 		if ( is_admin() ) {
 			return str_replace( '#deferload', '', $url );
 		} else {
 			return str_replace( '#deferload', '', $url ) . "' defer='defer";
 		}
-	} elseif ( strpos( $url, '#asyncdeferload' ) ) {
+	} elseif ( strpos( $url, '#asyncdeferload' ) !== false ) {
 		if ( is_admin() ) {
 			return str_replace( '#asyncdeferload', '', $url );
 		} else {
