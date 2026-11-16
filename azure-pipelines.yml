@@ -30,6 +30,7 @@ extends:
 
     themeName: 'bc-douglas-fir-department-theme'
     runComposer: false
+    includeNodeModulesInArtifact: true
 
     testEnvironments:
       - name: KinstaCstage
@@ -50,6 +51,10 @@ extends:
           tokenPrefix: '#{'
           tokenSuffix: '}#'
         displayName: 'Inject Version into sass/style.scss'
+
+      - script: composer install --no-interaction --no-progress && composer run phpcs
+        displayName: 'PHP Compatibility (8.2–8.5)'
+        continueOnError: true
 
       - task: Npm@1
         inputs:
